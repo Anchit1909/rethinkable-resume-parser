@@ -1,0 +1,15 @@
+services:
+  postgresdb:
+    container_name: rethinkable_db
+    image: postgres:15
+    restart: always
+    ports:
+      - 1110:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+      POSTGRES_PASSWORD: password
+    volumes:
+      - db_data_rethinkable:/var/lib/postgresql/data
+volumes:
+  db_data_rethinkable:
