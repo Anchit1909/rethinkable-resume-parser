@@ -1,5 +1,5 @@
 const express = require("express");
-const { Telegraf, Markup } = require("telegraf"); // Import Markup to create inline keyboard
+const { Telegraf, Markup } = require("telegraf");
 const { message } = require("telegraf/filters");
 const { OpenAI } = require("openai");
 const { PrismaClient } = require("@prisma/client");
@@ -181,7 +181,6 @@ bot.on(message("document"), async (ctx) => {
       ])
     );
 
-    // Remove the loading sticker after completion
     await ctx.deleteMessage(loadingStickerMessageId);
   } catch (error) {
     console.error("Error processing resume:", error);
