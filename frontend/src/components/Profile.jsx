@@ -4,13 +4,14 @@ import axios from "axios";
 
 const Profile = () => {
   const { memberId } = useParams();
+  console.log(memberId);
   const [profile, setProfile] = useState(null);
 
   useEffect(() => {
     const fetchProfile = async () => {
       try {
         const response = await axios.get(
-          `http://192.168.0.110:3000/api/member/${memberId}`
+          `http://localhost:3000/api/member/${memberId}`
         );
         setProfile(response.data);
       } catch (error) {
