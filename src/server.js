@@ -135,9 +135,13 @@ bot.on(message("document"), async (ctx) => {
   if (!doc) return;
 
   try {
+    const loadingStickerMessage = await ctx.replyWithSticker(
+      "CAACAgIAAxkBAAMUZhjxsUEZAYKWEz-qMiiLUUgJfP8AAokKAAJxbolL05dc6IwrA7A0BA"
+    );
+    const loadingStickerMessageId = loadingStickerMessage.message_id;
+
     const file = await ctx.telegram.getFile(doc.file_id);
     const fileLink = `https://api.telegram.org/file/bot${process.env.TELEGRAM_BOT_API}/${file.file_path}`;
-
     const response = await fetch(fileLink);
     const arrayBuffer = await response.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
@@ -152,7 +156,7 @@ bot.on(message("document"), async (ctx) => {
     );
 
     for (const exp of resumeData.work_experiences) {
-      const experience = await db.saveExperience(member.id, {
+      await db.saveExperience(member.id, {
         title: exp.job_title,
         company: exp.company_name,
         startDate: exp.start_date,
@@ -167,16 +171,18 @@ bot.on(message("document"), async (ctx) => {
 
     const profileLink = `${process.env.MINI_APP_URL}/profile/${member.id}`;
 
-    // Inline button with web_app type that opens the mini app
     await ctx.reply(
       "Your resume has been processed and saved. You can view your profile below:",
       Markup.inlineKeyboard([
         Markup.button.webApp(
-          "Open Profile in Mini App", // Button label
-          `${process.env.MINI_APP_URL}/profile/${member.id}` // Web App URL
+          "Open Profile in Mini App",
+          `${process.env.MINI_APP_URL}/profile/${member.id}`
         ),
       ])
     );
+
+    // Remove the loading sticker after completion
+    await ctx.deleteMessage(loadingStickerMessageId);
   } catch (error) {
     console.error("Error processing resume:", error);
     await ctx.reply(
