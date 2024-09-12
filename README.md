@@ -40,7 +40,7 @@ Rethinkable Resume Parser is a Telegram bot that allows users to automatically g
 
 ## Demo
 
-<img src="./frontend/public/demo.gif" width=70%>
+<img src="./frontend/public/demo.gif" width=50%>
 
 ## Running Locally
 
