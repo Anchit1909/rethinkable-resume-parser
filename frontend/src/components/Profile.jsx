@@ -10,7 +10,7 @@ const Profile = () => {
     const fetchProfile = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/api/member/${memberId}`
+          `http://192.168.0.110:3000/api/member/${memberId}`
         );
         setProfile(response.data);
       } catch (error) {
