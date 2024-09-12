@@ -1,5 +1,5 @@
 const express = require("express");
-const { Telegraf } = require("telegraf");
+const { Telegraf, Markup } = require("telegraf"); // Import Markup to create inline keyboard
 const { message } = require("telegraf/filters");
 const { OpenAI } = require("openai");
 const { PrismaClient } = require("@prisma/client");
@@ -167,8 +167,15 @@ bot.on(message("document"), async (ctx) => {
 
     const profileLink = `${process.env.MINI_APP_URL}/profile/${member.id}`;
 
+    // Inline button with web_app type that opens the mini app
     await ctx.reply(
-      `Your resume has been processed and saved. You can view your profile here: ${profileLink}`
+      "Your resume has been processed and saved. You can view your profile below:",
+      Markup.inlineKeyboard([
+        Markup.button.webApp(
+          "Open Profile in Mini App", // Button label
+          `${process.env.MINI_APP_URL}/profile/${member.id}` // Web App URL
+        ),
+      ])
     );
   } catch (error) {
     console.error("Error processing resume:", error);
