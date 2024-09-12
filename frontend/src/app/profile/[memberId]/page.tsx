@@ -42,7 +42,7 @@ const Profile = ({ params }: { params: { memberId: string } }) => {
     const fetchProfile = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/member/${memberId}`
+          `https://rethinkableapi.anchitsinha.xyz/api/member/${memberId}`
         );
         setProfile(response.data);
       } catch (error) {
