@@ -42,7 +42,7 @@ const Profile = ({ params }: { params: { memberId: string } }) => {
     const fetchProfile = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/api/member/${memberId}`
+          `http://localhost:5000/api/member/${memberId}`
         );
         setProfile(response.data);
       } catch (error) {
